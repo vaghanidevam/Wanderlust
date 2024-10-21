@@ -1,0 +1,176 @@
+<%- layout("./layout/boilerplate") %>
+<body>
+    <style>
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 50rem;
+            margin: 0 auto;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+
+        .edit-b {
+            width: 100%;
+            padding: 10px;
+            background-color: red;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .edit-b:hover {
+            background-color: #c0392b;
+        }
+
+        /* Media Query for smaller screens */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            .edit-b {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 10px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            textarea {
+                padding: 8px;
+            }
+
+            .edit-b {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+
+        .image-upload-preview {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    gap: 10px; /* Space between elements */
+}
+
+.current-image {
+    margin-top: 0; /* Remove margin-top for better alignment */
+    padding: 5px; /* Less padding */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    max-width: 100px; /* Adjust width as needed */
+    text-align: center; /* Center align the image */
+}
+
+.current-image img {
+    width: 100%; /* Make the image fill the container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 4px;
+}
+
+
+    </style>
+    <div class="form-container">
+        <!-- <form action="/listings/<%= listingg._id %>?_method=put" method="POST" enctype="multipart/form-data">
+            <label for="title">Name</label>
+            <input type="text" id="title" name="listing[title]" value="<%= listingg.title %>"><br/>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="listing[description]" rows="4"><%= listingg.description %></textarea><br/>
+
+            <label for="price">Price</label>
+            <input type="number" id="price" name="listing[price]" value="<%= listingg.price %>"><br/>
+
+            <label for="image">Upload New Image</label>
+            <input type="file" id="image" name="listing[image]" <br/>
+
+            <label for="country">Country</label>
+            <input type="text" id="country" name="listing[country]" value="<%= listingg.country %>"><br/>
+
+            <label for="location">Location</label>
+            <input type="text" id="location" name="listing[location]" value="<%= listingg.location %>"><br/>
+
+            <button type="submit" class="edit-b">Edit</button>
+        </form> -->
+
+
+        <form action="/listings/<%= listingg._id %>?_method=put" method="POST" enctype="multipart/form-data" class="needs-validation">
+            <div class="mb-3">
+                <label for="title" class="form-label">Name</label>
+                <input type="text" id="title" name="listing[title]" class="form-control" value="<%= listingg.title %>" required>
+                <div class="invalid-feedback">
+                    Please enter a title.
+                </div>
+            </div>
+        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="listing[description]" class="form-control" rows="4" required><%= listingg.description %></textarea>
+            </div>
+        
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" id="price" name="listing[price]" class="form-control" value="<%= listingg.price %>" required>
+            </div>
+        
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload New Image</label>
+                <div class="image-upload-preview">
+                    <input type="file" id="image" name="listing[image]" class="form-control" accept="image/*">
+                    
+                    <% if (listingg.image) { %>
+                        <div class="current-image mt-2">
+                            <img src="<%= listingg.image.url %>" alt="Current Image" class="img-fluid">
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" id="country" name="listing[country]" class="form-control" value="<%= listingg.country %>" required>
+            </div>
+        
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" id="location" name="listing[location]" class="form-control" value="<%= listingg.location %>" required>
+            </div>
+        
+            <button type="submit" class="edit-b">Edit</button>
+        </form>
+        
+    </div>
+</body>
