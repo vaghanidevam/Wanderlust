@@ -17,7 +17,7 @@ const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const localStrategy = require("passport-local");
-const u = require("../MAJORPROJECT/models/users.js");
+const user = require("../MAJORPROJECT/models/users.js");
 const listingRouter = require("../MAJORPROJECT/routes/listings.js");
 const reviewRouter = require("../MAJORPROJECT/routes/reviewws.js");
 const userRouter = require("../MAJORPROJECT/routes/user.js");
@@ -43,7 +43,9 @@ class ExpressError extends Error{
 
 
 /////////////////////////////////////////////////////////////////
-const MONOGO_URL = "mongodb+srv://wanderlust65:PJPTENxFaxnR40uN@cluster0.v6itl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// const MONOGO_URL = "mongodb+srv://wanderlust65:PJPTENxFaxnR40uN@cluster0.v6itl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const MONOGO_URL = "mongodb://localhost:27017"
+
 main()
 .then(()=>{
     console.log("connected to DB");
@@ -59,19 +61,19 @@ async function main(){
 
 /////////////////////////////////////////////////////////////////
 
-const store = MongoStore.create({
-    mongoUrl: 'mongodb+srv://wanderlust65:PJPTENxFaxnR40uN@cluster0.v6itl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-    crypto:{
-        secret: "wanderlust"
-    },
-    touchAfter: 24*3600
-  });
+// const store = MongoStore.create({
+//     mongoUrl: 'mongodb+srv://wanderlust65:PJPTENxFaxnR40uN@cluster0.v6itl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+//     crypto:{
+//         secret: "wanderlust"
+//     },
+//     touchAfter: 24*3600
+//   });
 //   store.on("error", ()=>{
 //     console.log("error in mongo session store ", err);
 //   });
 
 const sessionOptions = {
-    store:store,
+    // store:store,
     secret: "wanderlust",
     resave: false,
     saveUninitialized: true,
@@ -89,9 +91,9 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new localStrategy(u.authenticate()));
-passport.serializeUser(u.serializeUser());
-passport.deserializeUser(u.deserializeUser()); 
+passport.use(new localStrategy(user.authenticate()));
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser()); 
 
 // app.get("/demo", async (req,res)=>{
 //     let user1 = user ({
@@ -109,7 +111,7 @@ passport.deserializeUser(u.deserializeUser());
 app.use((req, res, next)=>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.curruser = req.u; 
+    res.locals.curruser = req.user; 
     
 // console.log('Cloud Name:', process.env.CLOUD_NAME);
 // console.log('API Key:', process.env.CLOUD_API_KEY);
