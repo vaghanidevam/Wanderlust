@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const asyncWrap = require("../u/wrapAsync.js");
-const ExpressError = require("../u/ExpressError.js");
+// const asyncWrap = require("../u/wrapAsync.js");
+// const ExpressError = require("../u/ExpressError.js");
 const listing = require("../models/listing.js");
 const mehtodOverride =  require("method-override");
 const {listingSchema} = require("../schema.js");
@@ -21,6 +21,20 @@ const upload = multer({ storage });
 //        }
 
 // }
+asyncWrap = (fn)=>{
+      return (req, res, next)=>{
+          fn(req, res, next).catch(next);
+      }
+  };
+
+class ExpressError extends Error{
+      constructor(statusCode, message){
+          super();
+          this.statusCode = statusCode;
+          this.message = message;
+  
+      }
+  }
 
 
 router.route("")

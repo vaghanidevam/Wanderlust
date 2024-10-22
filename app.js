@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const mehtodOverride =  require("method-override");
 const ejsMate = require("ejs-mate");
-const ExpressError = require("./u/ExpressError.js");
+// const ExpressError = require("./u/ExpressError.js");
 const Joi = require('joi');
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
@@ -31,9 +31,15 @@ app.use(mehtodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.json());
 
+ 
+class ExpressError extends Error{
+    constructor(statusCode, message){
+        super();
+        this.statusCode = statusCode;
+        this.message = message;
 
-
-
+    }
+}
 
 
 /////////////////////////////////////////////////////////////////
