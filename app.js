@@ -17,7 +17,7 @@ const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const localStrategy = require("passport-local");
-const user = require("../MAJORPROJECT/models/users.js");
+const users = require("../MAJORPROJECT/models/users.js");
 const listingRouter = require("../MAJORPROJECT/routes/listings.js");
 const reviewRouter = require("../MAJORPROJECT/routes/reviewws.js");
 const userRouter = require("../MAJORPROJECT/routes/user.js");
@@ -89,9 +89,9 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new localStrategy(user.authenticate()));
-passport.serializeUser(user.serializeUser());
-passport.deserializeUser(user.deserializeUser()); 
+passport.use(new localStrategy(users.authenticate()));
+passport.serializeUser(users.serializeUser());
+passport.deserializeUser(users.deserializeUser()); 
 
 // app.get("/demo", async (req,res)=>{
 //     let user1 = user ({
@@ -109,7 +109,7 @@ passport.deserializeUser(user.deserializeUser());
 app.use((req, res, next)=>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.curruser = req.user; 
+    res.locals.curruser = req.users; 
     
 // console.log('Cloud Name:', process.env.CLOUD_NAME);
 // console.log('API Key:', process.env.CLOUD_API_KEY);
