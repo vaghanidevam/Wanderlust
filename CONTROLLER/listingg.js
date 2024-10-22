@@ -24,7 +24,7 @@ module.exports.newCreate = async (req, res, next)=>{
       console.log(url);
       console.log(filename);
     const list = await new listing (req.body.listing);
-    list.owner = req.user._id;
+    list.owner = req.u._id;
     list.image = {url, filename};
  list.coordinates = [location.lat, location.lon];
   console.log(list.coordinates);
